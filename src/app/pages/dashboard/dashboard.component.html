@@ -1,0 +1,55 @@
+<div>
+  <app-button
+    label="Thêm Sản Phẩm"
+    color="primary"
+    [routerLink]="['/product/create']"
+  ></app-button>
+  <app-button
+    label="Quản lý user"
+    color="primary"
+    [routerLink]="['/user']"
+  ></app-button>
+  <app-button
+    label="Đăng Xuất"
+    color="danger"
+    (onClick)="logout()"
+  ></app-button>
+</div>
+<div *ngIf="data.length > 0; else noData">
+  <ul>
+    <li *ngFor="let product of data">
+      <img
+        *ngIf="product.imageData"
+        [src]="getImageSrc(product.imageData)"
+        alt="Hình ảnh sản phẩm"
+      />
+      <h3>{{ product.title }}</h3>
+      <p>Giá: {{ product.price | currency : "VND" }}</p>
+      <app-button
+        label="Chỉnh sửa"
+        color="primary"
+        [routerLink]="['/product/create']"
+        [queryParams]="{
+          _id: product._id,
+          title: product.title,
+          price: product.price,
+          check: `update`
+        }"
+      ></app-button>
+      <app-button
+        label="Xóa"
+        color="danger"
+        [routerLink]="['/product/create']"
+        [queryParams]="{
+          _id: product._id,
+          title: product.title,
+          price: product.price,
+          check: `delete`
+        }"
+      ></app-button>
+    </li>
+  </ul>
+</div>
+<ng-template #noData>
+  <p>Không có sản phẩm nào.</p>
+</ng-template>

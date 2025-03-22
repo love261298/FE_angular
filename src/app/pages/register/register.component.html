@@ -1,0 +1,28 @@
+<div class="container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="phone" placeholder="Phone" />
+    <input type="text" formControlName="name" placeholder="Full Name" />
+    <input type="password" formControlName="password" placeholder="Password" />
+    <input
+      type="password"
+      formControlName="confirmPassword"
+      placeholder="Password"
+    />
+    <div class="buttonContainer">
+      <app-button
+        class="buttonContainer"
+        label="Register"
+        type="submit"
+        color="primary"
+        [disabled]="registerForm.invalid"
+        (onClick)="onSubmit()"
+        >Register</app-button
+      >
+      <app-button
+        label="Login"
+        color="primary"
+        (onClick)="onClick()"
+      ></app-button>
+    </div>
+  </form>
+</div>

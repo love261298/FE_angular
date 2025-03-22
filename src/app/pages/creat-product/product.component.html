@@ -1,0 +1,60 @@
+<div class="container">
+  <h2>Thêm Sản Phẩm Mới</h2>
+  <form [formGroup]="productForm" (ngSubmit)="submitForm()">
+    <div class="form-group">
+      <label for="title">Tên sản phẩm:</label>
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="price">Giá:</label>
+      <input
+        type="number"
+        id="price"
+        formControlName="price"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="image">Chọn hình ảnh:</label>
+      <input
+        type="file"
+        id="image"
+        (change)="onFileSelected($event)"
+        class="form-control"
+        required
+      />
+    </div>
+    <div *ngIf="check === 'delete'; else notDelete">
+      <app-button
+        label="Xóa sản phẩm"
+        color="danger"
+        type="submit"
+      ></app-button>
+    </div>
+    <ng-template #notDelete>
+      <div *ngIf="check === 'update'; else create">
+        <app-button
+          label="Cập Nhật Sản Phẩm"
+          color="primary"
+          type="submit"
+        ></app-button>
+      </div>
+      <ng-template #create>
+        <app-button
+          label="Thêm Sản Phẩm Mới"
+          color="primary"
+          type="submit"
+        ></app-button>
+      </ng-template>
+    </ng-template>
+  </form>
+</div>

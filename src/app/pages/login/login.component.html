@@ -1,0 +1,21 @@
+<div class="container">
+  <h2>Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="phone" placeholder="Phone" />
+    <input type="password" formControlName="password" placeholder="Password" />
+    <div class="buttonContainer">
+      <app-button
+        label="Login"
+        type="submit"
+        color="primary"
+        [disabled]="loginForm.invalid"
+        (onClick)="onSubmit()"
+      ></app-button>
+      <app-button
+        label="Register"
+        color="primary"
+        (onClick)="onClick()"
+      ></app-button>
+    </div>
+  </form>
+</div>
