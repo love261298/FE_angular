@@ -1,20 +1,4 @@
-<div>
-  <app-button
-    label="Thêm Sản Phẩm"
-    color="primary"
-    [routerLink]="['/product/create']"
-  ></app-button>
-  <app-button
-    label="Quản lý user"
-    color="primary"
-    [routerLink]="['/user']"
-  ></app-button>
-  <app-button
-    label="Đăng Xuất"
-    color="danger"
-    (onClick)="logout()"
-  ></app-button>
-</div>
+<app-navbar page="dashboard"></app-navbar>
 <div *ngIf="data.length > 0; else noData">
   <ul>
     <li *ngFor="let product of data">

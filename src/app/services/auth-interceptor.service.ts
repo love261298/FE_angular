@@ -1,44 +1,54 @@
-import { Injectable } from '@angular/core';
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 import {
-  HttpInterceptor,
   HttpRequest,
-  HttpHandler,
+  HttpHandlerFn,
   HttpEvent,
   HttpErrorResponse,
+  HttpStatusCode,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+export const authInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<any>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<any>> => {
+  const router = inject(Router);
+  const token = localStorage.getItem('jwt_token');
+  const authReq = token
+    ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
+    : req;
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('jwt_token');
-    let authReq = req;
-    if (token) {
-      authReq = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    }
+  return next(authReq).pipe(
+    catchError((error) => {
+      if (error instanceof HttpErrorResponse) {
+        console.error('HTTP Error:', error);
 
-    return next.handle(authReq).pipe(
-      catchError((error) => {
-        if (
-          error instanceof HttpErrorResponse &&
-          (error.status === 401 || error.status === 403)
-        ) {
-          localStorage.removeItem('jwt_token');
-          this.router.navigate(['/login']);
+        switch (error.status) {
+          case HttpStatusCode.Unauthorized:
+            console.log(HttpStatusCode.Unauthorized);
+            console.warn(
+              '⚠️ Không được phép! Chuyển hướng đến trang đăng nhập...'
+            );
+            localStorage.removeItem('jwt_token');
+            router.navigate(['/login']);
+            break;
+
+          case HttpStatusCode.Forbidden:
+            console.warn('⚠️ Bạn không có quyền truy cập!');
+            router.navigate(['/dashboard']);
+            break;
+
+          default:
+            alert(error.error?.message || 'Đã xảy ra lỗi');
         }
-        return throwError(() => error);
-      })
-    );
-  }
-}
+      }
+
+      return throwError(
+        () => new Error(error?.message || 'Lỗi không xác định')
+      );
+    })
+  );
+};

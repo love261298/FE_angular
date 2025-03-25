@@ -1,20 +1,25 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ButtonComponent } from '../../components/button/button.component';
-import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, ButtonComponent, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    ButtonComponent,
+    ReactiveFormsModule,
+    RouterModule,
+    NavbarComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
   private productService = inject(ProductService);
-  private authService = inject(AuthService);
   data: any = [];
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
@@ -22,13 +27,9 @@ export class DashboardComponent implements OnInit {
         this.data = res.products;
       },
       error: (err) => {
-        console.log(err);
+        console.log(err.error.message);
       },
     });
-  }
-
-  logout() {
-    this.authService.logout();
   }
 
   getImageSrc(imageData: { type: string; data: number[] }): string {
@@ -44,7 +45,7 @@ export class DashboardComponent implements OnInit {
         this.data = res.products;
       },
       error: (err) => {
-        console.log(err);
+        console.log(err.error.message);
       },
     });
   }

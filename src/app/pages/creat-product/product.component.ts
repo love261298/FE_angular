@@ -6,11 +6,17 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonComponent } from '../../components/button/button.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ButtonComponent,
+    NavbarComponent,
+  ],
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
@@ -39,9 +45,9 @@ export class ProductComponent implements OnInit {
           price: res['price'] || '',
         });
         this.check = res['check'];
-        console.log();
       },
     });
+    console.log(this.check);
   }
 
   onFileSelected(event: any) {
@@ -73,8 +79,8 @@ export class ProductComponent implements OnInit {
               alert('Cập nhật sản phẩm thành công');
               this.productForm.reset();
             },
-            error: (error) => {
-              console.error('Lỗi khi thêm sản phẩm:', error);
+            error: (err) => {
+              console.error('Lỗi khi thêm sản phẩm:', err.error.message);
               alert('Thêm sản phẩm thất bại!');
             },
           });
@@ -85,8 +91,8 @@ export class ProductComponent implements OnInit {
             alert('Cập nhật sản phẩm thành công');
             this.productForm.reset();
           },
-          error: (error) => {
-            console.error('Lỗi khi thêm sản phẩm:', error);
+          error: (err) => {
+            console.error('Lỗi khi thêm sản phẩm:', err.error.message);
             alert('Thêm sản phẩm thất bại!');
           },
         });
@@ -94,12 +100,10 @@ export class ProductComponent implements OnInit {
     } else {
       this.productService.deleteProduct(this.productForm.value.id).subscribe({
         next: (response) => {
-          console.log('Xóa sản phảm thành công', response);
           alert('Xóa sản phẩm thành công!');
           this.productForm.reset();
         },
         error: (error) => {
-          console.log('Xóa sản phảm thất bại');
           alert('Xóa sản phẩm thất bại!');
         },
       });

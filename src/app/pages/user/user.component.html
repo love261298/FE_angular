@@ -1,1 +1,60 @@
-<p>user works!</p>
+<app-navbar page="user"></app-navbar>
+
+<ng-container *ngIf="data.length > 0; else noData">
+  <ul>
+    <li *ngFor="let user of data" class="user-item">
+      <div class="user-info">
+        <span>{{ user.name }}</span>
+        <span>{{ user.phone }}</span>
+        <span>{{ user.role }}</span>
+      </div>
+      <div class="user-actions">
+        <app-button
+          label="Sửa"
+          color="secondary"
+          (onClick)="updateUser(user)"
+        ></app-button>
+        <app-button
+          label="Xóa user"
+          color="danger"
+          (onClick)="deleteUser(user.id)"
+        ></app-button>
+      </div>
+    </li>
+  </ul>
+</ng-container>
+
+<ng-template #noData>
+  <p>Không có người dùng nào.</p>
+</ng-template>
+
+<form
+  *ngIf="isUpdate"
+  [formGroup]="userForm"
+  (ngSubmit)="submitForm()"
+  class="user-form"
+>
+  <label for="phone">Phone:</label>
+  <input
+    id="phone"
+    type="text"
+    formControlName="phone"
+    placeholder="Nhập số điện thoại"
+  />
+
+  <label for="name">Name:</label>
+  <input id="name" type="text" formControlName="name" placeholder="Nhập tên" />
+
+  <label for="role">Role:</label>
+  <select id="role" formControlName="role">
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <app-button
+    label="Thay đổi"
+    color="primary"
+    [disabled]="userForm.invalid"
+    type="submit"
+  ></app-button>
+</form>

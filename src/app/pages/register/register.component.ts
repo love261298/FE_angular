@@ -29,13 +29,13 @@ export class RegisterComponent {
     confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
   });
   onClick() {
-    this.router.navigate(['/signin']);
+    this.router.navigate(['/login']);
   }
   onSubmit() {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe({
-        next: () => this.router.navigate(['/signin']),
-        error: (err) => alert(err.error),
+        next: () => this.router.navigate(['/login']),
+        error: (err) => alert(err.error.message),
       });
     }
   }

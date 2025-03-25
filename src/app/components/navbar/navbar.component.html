@@ -1,0 +1,38 @@
+<div>
+  <app-button
+    *ngIf="page !== 'dashboard'"
+    label="Trang chủ"
+    color="primary"
+    [routerLink]="['/dashboard']"
+  >
+  </app-button>
+
+  <app-button
+    *ngIf="page !== 'create'"
+    label="Thêm Sản Phẩm"
+    color="primary"
+    [routerLink]="['/product/create']"
+    [queryParams]="{
+      check: 'create'
+    }"
+  >
+  </app-button>
+
+  <app-button
+    *ngIf="page !== 'user'"
+    label="Quản lý user"
+    color="primary"
+    [routerLink]="['/user']"
+  >
+  </app-button>
+
+  <app-button
+    *ngIf="page !== 'password'"
+    label="Đổi mật khẩu"
+    color="secondary"
+    [routerLink]="['/password']"
+  >
+  </app-button>
+
+  <app-button label="Đăng Xuất" color="danger" (click)="logout()"> </app-button>
+</div>

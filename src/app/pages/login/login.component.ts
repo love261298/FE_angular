@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -17,7 +17,11 @@ import { ButtonComponent } from '../../components/button/button.component';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated())
+      this.router.navigate(['/dashboard']);
+  }
   private authService = inject(AuthService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
@@ -27,7 +31,7 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
   onClick() {
-    this.router.navigate(['/signup']);
+    this.router.navigate(['/register']);
   }
   onSubmit() {
     if (this.loginForm.valid) {
@@ -37,7 +41,7 @@ export class LoginComponent {
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
-          alert(err.error);
+          console.log(err.error.message);
         },
       });
     }

@@ -1,17 +1,18 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated()) {
-    return true;
-  } else {
-    console.log('ban chua dang nhap');
-    router.navigate(['/login']);
-    return false;
+  const isAuth = authService.isAuthenticated();
+  console.log(isAuth);
+  if (isAuth) return true;
+
+  if (!isAuth && !state.url.includes('/login')) {
+    console.warn('Unauthorized access - Redirecting to login');
   }
+
+  return router.createUrlTree(['/login']);
 };

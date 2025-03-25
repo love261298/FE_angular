@@ -1,5 +1,8 @@
+<app-navbar page="create"></app-navbar>
 <div class="container">
-  <h2>Thêm Sản Phẩm Mới</h2>
+  <h2 *ngIf="check === 'delete'">Xóa sản phẩm</h2>
+  <h2 *ngIf="check === 'update'">Cập nhật sản phẩm</h2>
+  <h2 *ngIf="check === 'create'">Thêm Sản Phẩm Mới</h2>
   <form [formGroup]="productForm" (ngSubmit)="submitForm()">
     <div class="form-group">
       <label for="title">Tên sản phẩm:</label>
