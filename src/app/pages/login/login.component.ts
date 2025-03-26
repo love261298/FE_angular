@@ -15,7 +15,6 @@ import { ButtonComponent } from '../../components/button/button.component';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
   ngOnInit(): void {

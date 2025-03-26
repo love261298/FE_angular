@@ -17,7 +17,6 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     ButtonComponent,
     NavbarComponent,
   ],
-  styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
   private r = inject(Router);

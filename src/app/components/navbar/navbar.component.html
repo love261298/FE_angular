@@ -1,9 +1,10 @@
-<div>
+<div class="flex gap-8 justify-content-center pyclea-4">
   <app-button
     *ngIf="page !== 'dashboard'"
     label="Trang chủ"
     color="primary"
     [routerLink]="['/dashboard']"
+    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
   >
   </app-button>
 
@@ -15,6 +16,7 @@
     [queryParams]="{
       check: 'create'
     }"
+    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
   >
   </app-button>
 
@@ -23,6 +25,7 @@
     label="Quản lý user"
     color="primary"
     [routerLink]="['/user']"
+    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
   >
   </app-button>
 
@@ -31,8 +34,15 @@
     label="Đổi mật khẩu"
     color="secondary"
     [routerLink]="['/password']"
+    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
   >
   </app-button>
 
-  <app-button label="Đăng Xuất" color="danger" (click)="logout()"> </app-button>
+  <app-button
+    label="Đăng Xuất"
+    color="danger"
+    (click)="logout()"
+    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
+  >
+  </app-button>
 </div>

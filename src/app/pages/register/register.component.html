@@ -1,26 +1,51 @@
-<div class="container">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <input type="text" formControlName="phone" placeholder="Phone" />
-    <input type="text" formControlName="name" placeholder="Full Name" />
-    <input type="password" formControlName="password" placeholder="Password" />
-    <input
-      type="password"
-      formControlName="confirmPassword"
-      placeholder="Password"
-    />
-    <div class="buttonContainer">
+<div
+  class="flex justify-content-center align-items-center min-h-screen w-full"
+  style="background: linear-gradient(135deg, #6e8efb, #a777e3)"
+>
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    class="bg-white shadow-5 p-5 border-round-lg w-3 m-auto"
+  >
+    <div class="text-3xl text-center pb-4 font-bold text-primary">Đăng Ký</div>
+    <div class="flex flex-column gap-3">
+      <input
+        type="text"
+        formControlName="phone"
+        placeholder="Phone"
+        class="w-full p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all"
+      />
+      <input
+        type="text"
+        formControlName="name"
+        placeholder="Full Name"
+        class="w-full p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all"
+      />
+      <input
+        type="password"
+        formControlName="password"
+        placeholder="Password"
+        class="w-full p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all"
+      />
+      <input
+        type="password"
+        formControlName="confirmPassword"
+        placeholder="Confirm Password"
+        class="w-full p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all"
+      />
+    </div>
+    <div class="flex justify-content-between mt-4">
       <app-button
-        class="buttonContainer"
         label="Register"
         type="submit"
         color="primary"
+        class="p-3 border-round-md bg-primary text-white cursor-pointer hover:bg-opacity-80 transition-all"
         [disabled]="registerForm.invalid"
-        (onClick)="onSubmit()"
-        >Register</app-button
-      >
+      ></app-button>
       <app-button
         label="Login"
-        color="primary"
+        color="secondary"
+        class="p-3 border-round-md bg-secondary text-white cursor-pointer hover:bg-opacity-80 transition-all"
         (onClick)="onClick()"
       ></app-button>
     </div>

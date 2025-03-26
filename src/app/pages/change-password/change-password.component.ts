@@ -21,7 +21,6 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     NavbarComponent,
   ],
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.css'],
 })
 export class ChangePasswordComponent {
   private fb = inject(FormBuilder);

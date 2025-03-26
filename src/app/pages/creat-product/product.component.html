@@ -1,38 +1,49 @@
 <app-navbar page="create"></app-navbar>
-<div class="container">
-  <h2 *ngIf="check === 'delete'">Xóa sản phẩm</h2>
-  <h2 *ngIf="check === 'update'">Cập nhật sản phẩm</h2>
-  <h2 *ngIf="check === 'create'">Thêm Sản Phẩm Mới</h2>
-  <form [formGroup]="productForm" (ngSubmit)="submitForm()">
-    <div class="form-group">
-      <label for="title">Tên sản phẩm:</label>
+<div class="w-screen">
+  <form
+    [formGroup]="productForm"
+    (ngSubmit)="submitForm()"
+    class="w-3 m-auto p-8 text-center flex flex-column gap-4 border-round-3xl shadow-2"
+    style="background: linear-gradient(135deg, #6e8efb, #a777e3)"
+  >
+    <h2 *ngIf="check === 'delete'" class="text-3xl">Xóa sản phẩm</h2>
+    <h2 *ngIf="check === 'update'" class="text-3xl">Cập nhật sản phẩm</h2>
+    <h2 *ngIf="check === 'create'" class="text-3xl">Thêm Sản Phẩm Mới</h2>
+    <div class="grid">
+      <label for="title" class="col-4 align-content-center text-4xl text-left"
+        >Tên sản phẩm:</label
+      >
       <input
         type="text"
         id="title"
         formControlName="title"
-        class="form-control"
         required
+        class="flex-1 mr-3 h-3rem text-3xl pl-3"
       />
     </div>
 
-    <div class="form-group">
-      <label for="price">Giá:</label>
+    <div class="grid">
+      <label for="price" class="col-4 align-content-center text-left text-4xl"
+        >Giá:</label
+      >
       <input
         type="number"
         id="price"
         formControlName="price"
-        class="form-control"
         required
+        class="flex-1 mr-3 h-3rem text-4xl pl-3"
       />
     </div>
 
-    <div class="form-group">
-      <label for="image">Chọn hình ảnh:</label>
+    <div class="grid">
+      <label for="image" class="col-4 align-content-center text-4xl text-left"
+        >Chọn hình ảnh:</label
+      >
       <input
         type="file"
         id="image"
         (change)="onFileSelected($event)"
-        class="form-control"
+        class="h-3rem text-1xl align-content-center"
         required
       />
     </div>

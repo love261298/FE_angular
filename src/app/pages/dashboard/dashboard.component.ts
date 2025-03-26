@@ -16,7 +16,6 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     NavbarComponent,
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
   private productService = inject(ProductService);

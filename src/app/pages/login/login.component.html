@@ -1,9 +1,27 @@
-<div class="container">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <input type="text" formControlName="phone" placeholder="Phone" />
-    <input type="password" formControlName="password" placeholder="Password" />
-    <div class="buttonContainer">
+<div
+  class="w-screen h-screen flex"
+  style="background: linear-gradient(135deg, #107279, #a777e3)"
+>
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+    class="w-2 m-auto p-6 border-round-3xl"
+    style="background: linear-gradient(135deg, #6e8efb, #a777e3)"
+  >
+    <h2 class="text-3xl text-center pb-4 font-bold text-primary">Login</h2>
+    <input
+      class="w-11 p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all mb-3"
+      type="text"
+      formControlName="phone"
+      placeholder="Phone"
+    />
+    <input
+      class="w-11 p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all mb-3"
+      type="password"
+      formControlName="password"
+      placeholder="Password"
+    />
+    <div class="flex justify-content-around">
       <app-button
         label="Login"
         type="submit"
@@ -13,7 +31,7 @@
       ></app-button>
       <app-button
         label="Register"
-        color="primary"
+        color="secondary"
         (onClick)="onClick()"
       ></app-button>
     </div>

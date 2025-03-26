@@ -23,7 +23,6 @@ import { firstValueFrom } from 'rxjs';
     NavbarComponent,
   ],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.css',
 })
 export class UserComponent implements OnInit {
   private userService = inject(UserService);
@@ -38,7 +37,9 @@ export class UserComponent implements OnInit {
     this.initForm();
     await this.loadUsers();
   }
-
+  setIsUpdate() {
+    this.isUpdate = false;
+  }
   // Khởi tạo form
   initForm() {
     this.userForm = this.fb.group({

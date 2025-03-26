@@ -1,14 +1,17 @@
 <app-navbar page="user"></app-navbar>
 
 <ng-container *ngIf="data.length > 0; else noData">
-  <ul>
-    <li *ngFor="let user of data" class="user-item">
-      <div class="user-info">
-        <span>{{ user.name }}</span>
-        <span>{{ user.phone }}</span>
-        <span>{{ user.role }}</span>
+  <ul class="w-11 m-auto">
+    <li
+      *ngFor="let user of data"
+      class="flex justify-content-between align-items-center py-3 border-bottom-1 surface-border"
+    >
+      <div class="flex gap-4 w-10 justify-content-between">
+        <div class="text-2xl">{{ user.name }}</div>
+        <div class="text-2xl">{{ user.phone }}</div>
+        <div class="text-2xl">{{ user.role }}</div>
       </div>
-      <div class="user-actions">
+      <div class="flex gap-3">
         <app-button
           label="Sửa"
           color="secondary"
@@ -25,36 +28,67 @@
 </ng-container>
 
 <ng-template #noData>
-  <p>Không có người dùng nào.</p>
+  <p class="text-center text-lg font-semibold">Không có người dùng nào.</p>
 </ng-template>
 
-<form
+<div
   *ngIf="isUpdate"
-  [formGroup]="userForm"
-  (ngSubmit)="submitForm()"
-  class="user-form"
+  class="flex align-items-center justify-content-center w-screen pt-6"
 >
-  <label for="phone">Phone:</label>
-  <input
-    id="phone"
-    type="text"
-    formControlName="phone"
-    placeholder="Nhập số điện thoại"
-  />
+  <form
+    [formGroup]="userForm"
+    (ngSubmit)="submitForm()"
+    class="bg-white flex flex-column gap-3 p-4 shadow-2 border-round surface-card w-3 bg-white"
+  >
+    <div class="field flex flex-column gap-2">
+      <label for="phone" class="font-bold w-11 m-auto text-3xl"
+        >Số điện thoại</label
+      >
+      <input
+        id="phone"
+        type="text"
+        formControlName="phone"
+        placeholder="Nhập số điện thoại"
+        class="w-11 m-auto h-3rem border-round-2xl pl-4"
+      />
+    </div>
 
-  <label for="name">Name:</label>
-  <input id="name" type="text" formControlName="name" placeholder="Nhập tên" />
+    <div class="field flex flex-column gap-2">
+      <label for="name" class="font-bold w-11 m-auto text-3xl">Name:</label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        placeholder="Nhập tên"
+        class="w-11 m-auto h-3rem border-round-2xl pl-4"
+      />
+    </div>
 
-  <label for="role">Role:</label>
-  <select id="role" formControlName="role">
-    <option value="user">User</option>
-    <option value="admin">Admin</option>
-  </select>
-
-  <app-button
-    label="Thay đổi"
-    color="primary"
-    [disabled]="userForm.invalid"
-    type="submit"
-  ></app-button>
-</form>
+    <div class="field flex flex-column gap-2">
+      <label for="role" class="font-bold w-11 m-auto text-3xl">Role:</label>
+      <select
+        id="role"
+        formControlName="role"
+        class="w-11 m-auto h-3rem border-round-2xl pl-4"
+      >
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+    <div class="flex justify-content-between">
+      <app-button
+        label="Thay đổi"
+        color="primary"
+        [disabled]="userForm.invalid"
+        type="submit"
+        class="w-full text-center"
+      ></app-button>
+      <app-button
+        label="Thoát"
+        color="secondary"
+        class="w-full text-center"
+        (onClick)="setIsUpdate()"
+      ></app-button>
+    </div>
+  </form>
+</div>

@@ -15,7 +15,6 @@ import { ButtonComponent } from '../../components/button/button.component';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   private authService = inject(AuthService);
@@ -34,7 +33,10 @@ export class RegisterComponent {
   onSubmit() {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe({
-        next: () => this.router.navigate(['/login']),
+        next: () => {
+          alert('Đăng ký thành công!');
+          this.router.navigate(['/login']);
+        },
         error: (err) => alert(err.error.message),
       });
     }

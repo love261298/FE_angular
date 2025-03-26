@@ -1,39 +1,53 @@
 <app-navbar page="dashboard"></app-navbar>
-<div *ngIf="data.length > 0; else noData">
-  <ul>
-    <li *ngFor="let product of data">
+
+<div *ngIf="data.length > 0; else noData" class="w-screen">
+  <ul class="grid" style="width: calc(100% - 20px)">
+    <li *ngFor="let product of data" class="col-4 flex flex-column">
       <img
         *ngIf="product.imageData"
         [src]="getImageSrc(product.imageData)"
         alt="Hình ảnh sản phẩm"
+        class="w-full block"
+        style="max-height: 80%; height: 80%"
       />
-      <h3>{{ product.title }}</h3>
-      <p>Giá: {{ product.price | currency : "VND" }}</p>
-      <app-button
-        label="Chỉnh sửa"
-        color="primary"
-        [routerLink]="['/product/create']"
-        [queryParams]="{
-          _id: product._id,
-          title: product.title,
-          price: product.price,
-          check: `update`
-        }"
-      ></app-button>
-      <app-button
-        label="Xóa"
-        color="danger"
-        [routerLink]="['/product/create']"
-        [queryParams]="{
-          _id: product._id,
-          title: product.title,
-          price: product.price,
-          check: `delete`
-        }"
-      ></app-button>
+      <div class="text-2xl mt-auto font-bold">
+        Tên sản phẩm: {{ product.title }}
+      </div>
+      <div class="text-2xl text-gray-500 py-2">
+        Giá: {{ product.price | currency : "VND" }}
+      </div>
+
+      <div class="flex justify-content-around">
+        <app-button
+          label="Chỉnh sửa"
+          color="primary"
+          [routerLink]="['/product/create']"
+          [queryParams]="{
+            _id: product._id,
+            title: product.title,
+            price: product.price,
+            check: `update`
+          }"
+          class="p-mt-2 p-w-full p-d-flex p-jc-center"
+        ></app-button>
+
+        <app-button
+          label="Xóa"
+          color="danger"
+          [routerLink]="['/product/create']"
+          [queryParams]="{
+            _id: product._id,
+            title: product.title,
+            price: product.price,
+            check: `delete`
+          }"
+          class="p-mt-2 p-w-full p-d-flex p-jc-center"
+        ></app-button>
+      </div>
     </li>
   </ul>
 </div>
+
 <ng-template #noData>
-  <p>Không có sản phẩm nào.</p>
+  <p class="p-text-center">Không có sản phẩm nào.</p>
 </ng-template>
