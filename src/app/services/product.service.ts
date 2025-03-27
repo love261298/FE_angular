@@ -9,8 +9,12 @@ import { Observable } from 'rxjs';
 export class ProductService {
   constructor(private http: HttpClient) {}
   private apiUrl = environment.API_URL;
-  getProducts(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/product`);
+  getProducts(lastId?: string): Observable<any> {
+    let url = `${this.apiUrl}/product`;
+    if (lastId) {
+      url += `?lastId=${lastId}`;
+    }
+    return this.http.get(url);
   }
   getProductById(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/product/${id}`);

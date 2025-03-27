@@ -14,7 +14,7 @@
         Tên sản phẩm: {{ product.title }}
       </div>
       <div class="text-2xl text-gray-500 py-2">
-        Giá: {{ product.price | currency : "VND" }}
+        Giá: {{ product.price | currency : "USD" }}
       </div>
 
       <div class="flex justify-content-around">
@@ -46,6 +46,13 @@
       </div>
     </li>
   </ul>
+</div>
+<div class="text-center py-4">
+  <app-button
+    (click)="loadMore()"
+    [disabled]="isLoading"
+    label="Xem thêm"
+  ></app-button>
 </div>
 
 <ng-template #noData>

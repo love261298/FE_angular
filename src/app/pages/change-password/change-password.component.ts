@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
-  FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -23,24 +23,33 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
   templateUrl: './change-password.component.html',
 })
 export class ChangePasswordComponent {
-  private fb = inject(FormBuilder);
   private userService = inject(UserService);
   private router = inject(Router);
 
-  passwordForm: FormGroup = this.fb.group({
-    oldPassword: ['', [Validators.required, Validators.minLength(6)]],
-    newPassword: ['', [Validators.required, Validators.minLength(6)]],
-    newPasswordConfirm: ['', [Validators.required, Validators.minLength(6)]],
+  passwordForm: FormGroup = new FormGroup({
+    oldPassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+    newPassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+    newPasswordConfirm: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
   });
 
   onSubmit() {
     if (this.passwordForm.valid) {
-      const passwordForm = this.passwordForm.value;
+      const passwordForm = { ...this.passwordForm.value };
 
       this.userService.changePassword(passwordForm).subscribe({
         next: () => {
           alert('Đổi mật khẩu thành công');
-          this.router.navigate(['/dashboard']);
+          localStorage.removeItem('jwt_token');
+          this.router.navigate(['/login']);
         },
         error: (err) => {
           alert(err.error.message || 'Có lỗi xảy ra, vui lòng thử lại!');

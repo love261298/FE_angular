@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ButtonComponent } from '../../components/button/button.component';
 import {
-  FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -26,8 +26,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class UserComponent implements OnInit {
   private userService = inject(UserService);
-  private fb = inject(FormBuilder);
-
+  isLoading: boolean = false;
   data: any[] = [];
   isUpdate = false;
   userForm!: FormGroup;
@@ -35,31 +34,45 @@ export class UserComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm();
-    await this.loadUsers();
+    await this.loadMore();
   }
   setIsUpdate() {
     this.isUpdate = false;
   }
-  // Khởi tạo form
+
   initForm() {
-    this.userForm = this.fb.group({
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10,11}$')]],
-      name: ['', Validators.required],
-      role: ['user', Validators.required],
+    this.userForm = new FormGroup({
+      phone: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]{10,11}$'),
+      ]),
+      name: new FormControl('', Validators.required),
+      role: new FormControl('user', Validators.required),
     });
   }
+  async loadMore() {
+    if (this.isLoading) return;
+    this.isLoading = true;
 
-  // Tải danh sách user từ API
-  async loadUsers() {
-    try {
-      const res = await firstValueFrom(this.userService.getUser());
-      this.data = res.user;
-    } catch (err: any) {
-      console.error(err?.error?.message);
-    }
+    const lastId = this.data.length
+      ? this.data[this.data.length - 1]._id
+      : null;
+
+    this.userService.getUser(lastId).subscribe({
+      next: (res) => {
+        if (res.users.length) {
+          this.data = [...this.data, ...res.users];
+        } else {
+          alert('Không còn người dùng để tải');
+        }
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Lỗi khi lấy người dùng', err);
+        this.isLoading = false;
+      },
+    });
   }
-
-  // Cập nhật thông tin user
   updateUser(user: any) {
     this.userForm.patchValue({
       name: user?.name || '',
@@ -70,7 +83,6 @@ export class UserComponent implements OnInit {
     this.isUpdate = true;
   }
 
-  // Xóa user có xác nhận
   async deleteUser(id: string) {
     if (!confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) return;
 
@@ -83,7 +95,6 @@ export class UserComponent implements OnInit {
     }
   }
 
-  // Xử lý form submit (cập nhật/thêm mới user)
   async submitForm() {
     if (this.userForm.invalid) {
       alert('Vui lòng điền đầy đủ thông tin hợp lệ.');
@@ -94,7 +105,6 @@ export class UserComponent implements OnInit {
 
     try {
       if (this.isUpdate && this.selectedUserId !== null) {
-        // Cập nhật user
         formData.id = this.selectedUserId;
         await firstValueFrom(this.userService.updateUser(formData));
         alert('Cập nhật thông tin người dùng thành công');
@@ -102,14 +112,12 @@ export class UserComponent implements OnInit {
           user.id === formData.id ? { ...user, ...formData } : user
         );
       }
-      // Reset form và trạng thái
       this.resetForm();
     } catch (err: any) {
       console.error(err?.error?.message);
     }
   }
 
-  // Reset form sau khi hoàn thành thao tác
   resetForm() {
     this.isUpdate = false;
     this.selectedUserId = null;

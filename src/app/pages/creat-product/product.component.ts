@@ -1,7 +1,5 @@
-import { Title } from '@angular/platform-browser';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,20 +18,18 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 })
 export class ProductComponent implements OnInit {
   private r = inject(Router);
-  check: string = 'create';
   private router = inject(ActivatedRoute);
-  productForm: FormGroup;
-  selectedFile: File | null = null;
   private productService = inject(ProductService);
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
-    this.productForm = this.fb.group({
-      id: [''],
-      title: [''],
-      price: [''],
-      image: [null],
-    });
-  }
+  check: string = 'create';
+  selectedFile: File | null = null;
+
+  productForm: FormGroup = new FormGroup({
+    id: new FormControl(''),
+    title: new FormControl(''),
+    price: new FormControl(''),
+    image: new FormControl(null),
+  });
 
   ngOnInit(): void {
     this.router.queryParams.subscribe({
@@ -69,6 +65,7 @@ export class ProductComponent implements OnInit {
       formData.append('title', this.productForm.get('title')?.value);
       formData.append('price', this.productForm.get('price')?.value);
       formData.append('image', this.selectedFile);
+
       if (this.productForm.value.id) {
         this.productService
           .update(this.productForm.value.id, formData)
@@ -97,6 +94,7 @@ export class ProductComponent implements OnInit {
         });
       }
     } else {
+      if (!confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) return;
       this.productService.deleteProduct(this.productForm.value.id).subscribe({
         next: (response) => {
           alert('Xóa sản phẩm thành công!');

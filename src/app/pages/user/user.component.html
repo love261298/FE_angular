@@ -92,3 +92,10 @@
     </div>
   </form>
 </div>
+<div class="text-center py-4">
+  <app-button
+    (click)="loadMore()"
+    [disabled]="isLoading"
+    label="Xem thêm"
+  ></app-button>
+</div>

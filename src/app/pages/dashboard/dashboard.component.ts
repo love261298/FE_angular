@@ -20,15 +20,9 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 export class DashboardComponent implements OnInit {
   private productService = inject(ProductService);
   data: any = [];
+  isLoading = false;
   ngOnInit(): void {
-    this.productService.getProducts().subscribe({
-      next: (res) => {
-        this.data = res.products;
-      },
-      error: (err) => {
-        console.log(err.error.message);
-      },
-    });
+    this.loadMore();
   }
 
   getImageSrc(imageData: { type: string; data: number[] }): string {
@@ -37,15 +31,27 @@ export class DashboardComponent implements OnInit {
     const blob = new Blob([uint8Array], { type: 'image/jpeg' });
     return URL.createObjectURL(blob);
   }
+  loadMore() {
+    if (this.isLoading) return;
+    this.isLoading = true;
 
-  getProductById(id: string): void {
-    this.productService.getProductById(id).subscribe({
-      next: (res) => {
-        this.data = res.products;
+    const lastId = this.data.length
+      ? this.data[this.data.length - 1]._id
+      : null;
+
+    this.productService.getProducts(lastId).subscribe(
+      (res) => {
+        if (res.products.length) {
+          this.data = [...this.data, ...res.products];
+        } else {
+          alert('Không còn sản phẩm để tải');
+        }
+        this.isLoading = false;
       },
-      error: (err) => {
-        console.log(err.error.message);
-      },
-    });
+      (err) => {
+        console.error('Lỗi khi lấy sản phẩm', err);
+        this.isLoading = false;
+      }
+    );
   }
 }

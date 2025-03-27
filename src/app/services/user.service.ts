@@ -9,8 +9,12 @@ import { Observable } from 'rxjs';
 export class UserService {
   constructor(private http: HttpClient) {}
   private apiUrl = environment.API_URL;
-  getUser(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/user`);
+  getUser(lastId?: string): Observable<any> {
+    let url = `${this.apiUrl}/user`;
+    if (lastId) {
+      url += `?lastId=${lastId}`;
+    }
+    return this.http.get(url);
   }
   updateUser(user: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/user/${user.phone}`, user);
