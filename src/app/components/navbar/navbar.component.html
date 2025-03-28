@@ -1,48 +1,46 @@
-<div class="w-screen flex gap-8 justify-content-center pyclea-4 py-4">
-  <app-button
+<div class="w-screen flex gap-8 justify-content-center py-6">
+  <button
     *ngIf="page !== 'dashboard'"
+    pButton
     label="Trang chủ"
-    color="primary"
+    [raised]="true"
+    class="p-button-primary p-button-rounded p-button-lg text-3xl font-bold px-6 py-4"
     [routerLink]="['/dashboard']"
-    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
-  >
-  </app-button>
+  ></button>
 
-  <app-button
+  <button
     *ngIf="page !== 'create'"
+    pButton
     label="Thêm Sản Phẩm"
-    color="primary"
+    [raised]="true"
+    class="p-button-primary p-button-rounded p-button-lg text-3xl font-bold px-6 py-4"
     [routerLink]="['/product/create']"
-    [queryParams]="{
-      check: 'create'
-    }"
-    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
-  >
-  </app-button>
+    [queryParams]="{ check: 'create' }"
+  ></button>
 
-  <app-button
+  <button
     *ngIf="page !== 'user'"
+    pButton
+    [raised]="true"
     label="Quản lý user"
-    color="primary"
+    class="p-button-primary p-button-rounded p-button-lg text-3xl font-bold px-6 py-4"
     [routerLink]="['/user']"
-    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
-  >
-  </app-button>
+  ></button>
 
-  <app-button
+  <button
     *ngIf="page !== 'password'"
+    pButton
+    [raised]="true"
     label="Đổi mật khẩu"
-    color="secondary"
+    class="p-button-secondary p-button-rounded p-button-lg text-3xl font-bold px-6 py-4"
     [routerLink]="['/password']"
-    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
-  >
-  </app-button>
+  ></button>
 
-  <app-button
+  <button
+    pButton
     label="Đăng Xuất"
-    color="danger"
+    [raised]="true"
+    class="p-button-danger p-button-rounded p-button-lg text-3xl font-bold px-6 py-4"
     (click)="logout()"
-    class="cursor-pointer border-round-2xl text-2xl font-bold px-3 py-4"
-  >
-  </app-button>
+  ></button>
 </div>

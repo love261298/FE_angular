@@ -1,5 +1,5 @@
 <div
-  class="flex justify-content-center align-items-center min-h-screen w-full"
+  class="flex min-h-screen w-full"
   style="background: linear-gradient(135deg, #6e8efb, #a777e3)"
 >
   <form
@@ -10,44 +10,62 @@
     <div class="text-3xl text-center pb-4 font-bold text-primary">Đăng Ký</div>
     <div class="flex flex-column gap-3">
       <input
+        pInputText
         type="text"
         formControlName="phone"
         placeholder="Phone"
-        class="w-11 mx-auto p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all"
+        class="w-full p-3 border-round-md border-1 border-gray-300"
       />
       <input
+        pInputText
         type="text"
         formControlName="name"
         placeholder="Full Name"
-        class="w-11 mx-auto p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all"
+        class="w-full p-3 border-round-md border-1 border-gray-300"
       />
-      <input
-        type="password"
+      <p-password
         formControlName="password"
         placeholder="Password"
-        class="w-11 mx-auto p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all"
-      />
-      <input
-        type="password"
+        [style]="{ width: '100%' }"
+        [inputStyle]="{
+          width: '100%',
+          padding: '12px',
+          'border-radius': '6px',
+          border: '1px solid #d1d5db',
+          'font-size': '1.4rem'
+        }"
+        [toggleMask]="true"
+      ></p-password>
+      <p-password
         formControlName="confirmPassword"
         placeholder="Confirm Password"
-        class="w-11 mx-auto p-3 border-round-md border-1 border-gray-300 hover:border-primary transition-all"
-      />
+        [style]="{ width: '100%' }"
+        [inputStyle]="{
+          width: '100%',
+          padding: '12px',
+          'border-radius': '6px',
+          border: '1px solid #d1d5db',
+          'font-size': '1.4rem'
+        }"
+        [toggleMask]="true"
+      ></p-password>
     </div>
     <div class="flex justify-content-between mt-4">
-      <app-button
+      <button
+        pButton
+        [raised]="true"
         label="Register"
         type="submit"
-        color="primary"
-        class="p-3 border-round-md bg-primary text-white cursor-pointer hover:bg-opacity-80 transition-all"
+        class="p-button-success p-button-rounded font-bold p-button-lg w-full mr-3 text-2xl"
         [disabled]="registerForm.invalid"
-      ></app-button>
-      <app-button
+      ></button>
+      <button
+        pButton
+        [raised]="true"
         label="Login"
-        color="secondary"
-        class="p-3 border-round-md bg-secondary text-white cursor-pointer hover:bg-opacity-80 transition-all"
-        (onClick)="onClick()"
-      ></app-button>
+        class="p-button-contrast p-button-rounded font-bold p-button-lg w-full ml-3 text-2xl"
+        (click)="onClick()"
+      ></button>
     </div>
   </form>
 </div>

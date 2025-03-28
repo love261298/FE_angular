@@ -1,7 +1,7 @@
 <app-navbar page="dashboard"></app-navbar>
 
-<div *ngIf="data.length > 0; else noData" class="w-screen">
-  <ul class="grid" style="width: calc(100% - 20px)">
+<div *ngIf="data.length > 0; else noData" class="w-full">
+  <ul class="grid mx-auto" style="width: calc(100% - 20px)">
     <li *ngFor="let product of data" class="col-4 flex flex-column">
       <img
         *ngIf="product.imageData"
@@ -18,41 +18,45 @@
       </div>
 
       <div class="flex justify-content-around">
-        <app-button
+        <button
+          pButton
+          [raised]="true"
           label="Chỉnh sửa"
-          color="primary"
           [routerLink]="['/product/create']"
+          class="p-button-primary p-button-rounded font-bold p-button-lg w-20rem text-3xl"
           [queryParams]="{
             _id: product._id,
             title: product.title,
             price: product.price,
             check: `update`
           }"
-          class="p-mt-2 p-w-full p-d-flex p-jc-center"
-        ></app-button>
-
-        <app-button
+        ></button>
+        <button
+          [raised]="true"
+          pButton
           label="Xóa"
-          color="danger"
           [routerLink]="['/product/create']"
+          class="p-button-danger font-bold p-button-rounded p-button-lg w-20rem text-3xl"
           [queryParams]="{
             _id: product._id,
             title: product.title,
             price: product.price,
             check: `delete`
           }"
-          class="p-mt-2 p-w-full p-d-flex p-jc-center"
-        ></app-button>
+        ></button>
       </div>
     </li>
   </ul>
 </div>
 <div class="text-center py-4">
-  <app-button
+  <button
+    [raised]="true"
+    pButton
+    label="Xem thêm"
     (click)="loadMore()"
     [disabled]="isLoading"
-    label="Xem thêm"
-  ></app-button>
+    class="p-button-success font-bold p-button-rounded p-button-lg w-20rem mr-3 text-3xl"
+  ></button>
 </div>
 
 <ng-template #noData>

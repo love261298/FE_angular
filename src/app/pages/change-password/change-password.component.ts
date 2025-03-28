@@ -8,8 +8,10 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { ButtonComponent } from '../../components/button/button.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-change-password',
@@ -17,8 +19,10 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ButtonComponent,
     NavbarComponent,
+    ButtonModule,
+    InputTextModule,
+    PasswordModule,
   ],
   templateUrl: './change-password.component.html',
 })

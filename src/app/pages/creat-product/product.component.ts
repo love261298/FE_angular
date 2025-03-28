@@ -3,8 +3,9 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ButtonComponent } from '../../components/button/button.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-product',
@@ -12,15 +13,16 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ButtonComponent,
     NavbarComponent,
+    ButtonModule,
+    InputTextModule,
   ],
 })
 export class ProductComponent implements OnInit {
   private r = inject(Router);
   private router = inject(ActivatedRoute);
   private productService = inject(ProductService);
-
+  buttonLabel: any;
   check: string = 'create';
   selectedFile: File | null = null;
 
@@ -42,7 +44,16 @@ export class ProductComponent implements OnInit {
         this.check = res['check'];
       },
     });
-    console.log(this.check);
+    switch (this.check) {
+      case 'delete':
+        this.buttonLabel = 'Xóa Sản Phẩm';
+        break;
+      case 'update':
+        this.buttonLabel = 'Cập Nhật Sản Phẩm';
+        break;
+      default:
+        this.buttonLabel = 'Thêm Sản Phẩm Mới';
+    }
   }
 
   onFileSelected(event: any) {

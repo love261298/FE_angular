@@ -16,8 +16,8 @@ export class UserService {
     }
     return this.http.get(url);
   }
-  updateUser(user: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/user/${user.phone}`, user);
+  updateUser(id: string, user: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/user/${id}`, user);
   }
 
   changePassword(passwordForm: any) {

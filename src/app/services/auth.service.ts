@@ -1,7 +1,7 @@
+import { jwtDecode } from 'jwt-decode';
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 

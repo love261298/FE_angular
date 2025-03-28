@@ -3,22 +3,21 @@
   <form
     [formGroup]="productForm"
     (ngSubmit)="submitForm()"
-    class="w-3 m-auto p-8 text-center flex flex-column gap-4 border-round-3xl shadow-2"
+    class="w-5 m-auto p-6 text-center flex flex-column gap-4 border-round-3xl shadow-2"
     style="background: linear-gradient(135deg, #6e8efb, #a777e3)"
   >
-    <h2 *ngIf="check === 'delete'" class="text-3xl">Xóa sản phẩm</h2>
-    <h2 *ngIf="check === 'update'" class="text-3xl">Cập nhật sản phẩm</h2>
-    <h2 *ngIf="check === 'create'" class="text-3xl">Thêm Sản Phẩm Mới</h2>
+    <h2 class="text-3xl">{{ buttonLabel }}</h2>
     <div class="grid">
       <label for="title" class="col-4 align-content-center text-4xl text-left"
         >Tên sản phẩm:</label
       >
       <input
-        type="text"
+        pInputText
         id="title"
+        type="text"
         formControlName="title"
-        required
-        class="flex-1 mr-3 h-3rem text-3xl pl-3"
+        class="w-full p-3 border-round-xl border-1 border-gray-300 hover:border-primary col text-2xl"
+        placeholder="Tên sản phẩm"
       />
     </div>
 
@@ -27,11 +26,12 @@
         >Giá:</label
       >
       <input
-        type="number"
+        pInputText
         id="price"
+        type="number"
         formControlName="price"
-        required
-        class="flex-1 mr-3 h-3rem text-4xl pl-3"
+        class="w-full p-3 border-round-xl border-1 border-gray-300 hover:border-primary col text-2xl"
+        placeholder="Giá sản phẩm"
       />
     </div>
 
@@ -40,35 +40,20 @@
         >Chọn hình ảnh:</label
       >
       <input
-        type="file"
+        pInputText
         id="image"
+        type="file"
+        formControlName="image"
         (change)="onFileSelected($event)"
-        class="h-3rem text-1xl align-content-center"
-        required
+        class="w-full p-3 border-round-xl border-1 border-gray-300 hover:border-primary col text-2xl"
       />
     </div>
-    <div *ngIf="check === 'delete'; else notDelete">
-      <app-button
-        label="Xóa sản phẩm"
-        color="danger"
-        type="submit"
-      ></app-button>
-    </div>
-    <ng-template #notDelete>
-      <div *ngIf="check === 'update'; else create">
-        <app-button
-          label="Cập Nhật Sản Phẩm"
-          color="primary"
-          type="submit"
-        ></app-button>
-      </div>
-      <ng-template #create>
-        <app-button
-          label="Thêm Sản Phẩm Mới"
-          color="primary"
-          type="submit"
-        ></app-button>
-      </ng-template>
-    </ng-template>
+    <button
+      pButton
+      [raised]="true"
+      label="{{ buttonLabel }}"
+      type="submit"
+      class="p-button-success p-button-rounded font-bold p-button-lg w-full text-3xl w-5 mx-auto"
+    ></button>
   </form>
 </div>

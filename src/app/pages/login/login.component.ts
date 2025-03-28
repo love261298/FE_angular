@@ -8,12 +8,19 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { ButtonComponent } from '../../components/button/button.component';
-
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    PasswordModule,
+    InputTextModule,
+  ],
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {

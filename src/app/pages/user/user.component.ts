@@ -1,7 +1,6 @@
 import { UserService } from './../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { ButtonComponent } from '../../components/button/button.component';
 import {
   FormControl,
   FormGroup,
@@ -10,17 +9,21 @@ import {
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { firstValueFrom } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-user',
   standalone: true,
   imports: [
     CommonModule,
-    ButtonComponent,
     ReactiveFormsModule,
     RouterModule,
     NavbarComponent,
+    ButtonModule,
+    InputTextModule,
+    SelectModule,
   ],
   templateUrl: './user.component.html',
 })
@@ -31,13 +34,13 @@ export class UserComponent implements OnInit {
   isUpdate = false;
   userForm!: FormGroup;
   selectedUserId: string | null = null;
-
+  roles = [
+    { label: 'User', value: 'user' },
+    { label: 'Admin', value: 'admin' },
+  ];
   async ngOnInit() {
     this.initForm();
     await this.loadMore();
-  }
-  setIsUpdate() {
-    this.isUpdate = false;
   }
 
   initForm() {
@@ -73,13 +76,13 @@ export class UserComponent implements OnInit {
       },
     });
   }
-  updateUser(user: any) {
+  udeUser(user: any) {
     this.userForm.patchValue({
       name: user?.name || '',
       phone: user?.phone || '',
       role: user?.role || 'user',
     });
-    this.selectedUserId = user.id;
+    this.selectedUserId = user._id;
     this.isUpdate = true;
   }
 
@@ -87,7 +90,14 @@ export class UserComponent implements OnInit {
     if (!confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) return;
 
     try {
-      await firstValueFrom(this.userService.deleteUser(id));
+      this.userService.deleteUser(id).subscribe({
+        next: (res) => {
+          this.data = res.users;
+        },
+        error: (err) => {
+          console.error(err?.error?.message);
+        },
+      });
       alert('Xóa người dùng thành công');
       this.data = this.data.filter((user) => user.id !== id);
     } catch (err: any) {
@@ -105,19 +115,21 @@ export class UserComponent implements OnInit {
 
     try {
       if (this.isUpdate && this.selectedUserId !== null) {
-        formData.id = this.selectedUserId;
-        await firstValueFrom(this.userService.updateUser(formData));
+        this.userService.updateUser(this.selectedUserId, formData).subscribe({
+          next: (res) => {
+            window.location.reload();
+          },
+          error: (err) => {
+            console.error(err?.error?.message);
+          },
+        });
         alert('Cập nhật thông tin người dùng thành công');
-        this.data = this.data.map((user) =>
-          user.id === formData.id ? { ...user, ...formData } : user
-        );
       }
       this.resetForm();
     } catch (err: any) {
       console.error(err?.error?.message);
     }
   }
-
   resetForm() {
     this.isUpdate = false;
     this.selectedUserId = null;

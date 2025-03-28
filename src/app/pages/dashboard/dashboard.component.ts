@@ -1,19 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ButtonComponent } from '../../components/button/button.component';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
     CommonModule,
-    ButtonComponent,
     ReactiveFormsModule,
     RouterModule,
     NavbarComponent,
+    ButtonModule,
   ],
   templateUrl: './dashboard.component.html',
 })
